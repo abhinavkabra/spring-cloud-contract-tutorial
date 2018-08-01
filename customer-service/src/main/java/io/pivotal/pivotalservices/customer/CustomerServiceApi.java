@@ -11,6 +11,11 @@ public class CustomerServiceApi {
     @Autowired
     private CustomerRepository repository;
 
+    @GetMapping
+    public Iterable<Customer> getCustomers() {
+        return repository.findAll();
+    }
+
     @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String addCustomer(@RequestBody Customer customer) {
         repository.save(customer);
