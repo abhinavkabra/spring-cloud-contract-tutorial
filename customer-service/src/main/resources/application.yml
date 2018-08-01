@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    stream:
+      bindings:
+        output:
+          destination: newCustomerAdded
+          content-type: application/json;charset=UTF-8

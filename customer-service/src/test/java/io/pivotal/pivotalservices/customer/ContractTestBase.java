@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.cloud.contract.verifier.messaging.boot.AutoConfigureMessageVerifier;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -18,10 +19,14 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
+@AutoConfigureMessageVerifier
 public class ContractTestBase {
 
     @Autowired
     WebApplicationContext context;
+
+    @Autowired
+    CustomerServiceApi customerApi;
 
     @MockBean
     CustomerRepository repository;
@@ -43,6 +48,11 @@ public class ContractTestBase {
         customer2.setCreatedOn("2018-08-01T12:33:16+00:00");
 
         when(repository.findAll()).thenReturn(Arrays.asList(customer1, customer2));
+        when(repository.findOne(anyString())).thenReturn(customer1);
+    }
+
+    protected void newCustomerAddedTriggered() {
+        customerApi.publishNewCustomerAddedMessage(new NewCustomerAddedMessage(UUID.randomUUID().toString()));
     }
 
 }
