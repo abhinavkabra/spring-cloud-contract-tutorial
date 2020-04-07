@@ -4,19 +4,23 @@ import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
-@Service
+@RestController
 public class CustomerService {
 
     private Date lastPollTime;
 
+    public CustomerService() {
+        setLastPollTime(new Date());
+    }
+
+    @GetMapping("/customersToGreet")
     public List<Customer> getNewCustomers() {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -24,10 +28,21 @@ public class CustomerService {
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
         ResponseEntity<Customer[]> response = restTemplate.exchange("http://localhost:9090/customers", HttpMethod.GET, entity, Customer[].class);
 
-        return Arrays.stream(response.getBody())
-                .filter(c -> c.getCreatedOn().after(lastPollTime))
-                .map(c -> { sendEmail(c); return c; })
-                .collect(Collectors.toList());
+        List<Customer> newCustomers = new ArrayList<>();
+        for (Customer c : response.getBody()) {
+            long customerCreatedOn = c.getCreatedOn().getTime();
+            long lastPollMillis = lastPollTime.getTime();
+            if (customerCreatedOn > lastPollMillis) {
+                newCustomers.add(c);
+            }
+        }
+
+        for (Customer c : newCustomers) {
+            sendEmail(c);
+        }
+
+        setLastPollTime(new Date());
+        return newCustomers;
     }
 
     protected void setLastPollTime(Date lastPollTime) {
