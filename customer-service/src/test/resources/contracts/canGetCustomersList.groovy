@@ -1,9 +1,11 @@
+package contracts;
+
 org.springframework.cloud.contract.spec.Contract.make {
     request {
         method 'GET'
         url '/customers'
         headers {
-            accept(applicationJsonUtf8())
+            accept(applicationJson())
         }
     }
     response {
@@ -23,7 +25,7 @@ org.springframework.cloud.contract.spec.Contract.make {
                 ]
         ])
         headers {
-            contentType(applicationJsonUtf8())
+            contentType('application/json')
         }
     }
 }

@@ -1,3 +1,5 @@
+package contracts
+
 org.springframework.cloud.contract.spec.Contract.make {
     label 'newCustomerAdded'
     input {
@@ -9,7 +11,7 @@ org.springframework.cloud.contract.spec.Contract.make {
                 customerId: $(consumer('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb'), producer(regex(uuid())))
         ])
         headers {
-            messagingContentType(applicationJsonUtf8())
+            messagingContentType('application/json')
         }
     }
 }

@@ -19,7 +19,7 @@ public class CustomerService {
     public List<Customer> getNewCustomers() {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON_UTF8));
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
         ResponseEntity<Customer[]> response = restTemplate.exchange("http://localhost:9090/customers", HttpMethod.GET, entity, Customer[].class);
 
@@ -38,7 +38,7 @@ public class CustomerService {
         // get the customer with this ID...
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON_UTF8));
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
         ResponseEntity<Customer> response = restTemplate.exchange("http://localhost:9090/customers/"+event.getCustomerId(), HttpMethod.GET, entity, Customer.class);
 

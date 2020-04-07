@@ -1,9 +1,11 @@
+package contracts;
+
 org.springframework.cloud.contract.spec.Contract.make {
     request {
         method 'GET'
         url("/customers/${regex(uuid())}")
         headers {
-            accept(applicationJsonUtf8())
+            accept(applicationJson())
         }
     }
     response {
@@ -15,7 +17,7 @@ org.springframework.cloud.contract.spec.Contract.make {
             "createdOn": $(consumer("2018-08-01T06:33:16+00:00"), producer(regex(iso8601WithOffset())))
         ])
         headers {
-            contentType(applicationJsonUtf8())
+            contentType('application/json')
         }
     }
 }

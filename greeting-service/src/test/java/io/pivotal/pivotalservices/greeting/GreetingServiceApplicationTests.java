@@ -6,6 +6,7 @@ import org.joda.time.format.ISODateTimeFormat;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Matchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,12 +21,12 @@ import java.util.List;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureStubRunner(ids = {"io.pivotal.pivotalservices:customer-service:+:stubs:9090"}, workOffline = true)
+@AutoConfigureStubRunner(ids = {"io.pivotal.pivotalservices:customer-service:+:stubs:9090"}, stubsMode = StubRunnerProperties.StubsMode.LOCAL)
 public class GreetingServiceApplicationTests {
 
 	@SpyBean
@@ -72,7 +73,7 @@ public class GreetingServiceApplicationTests {
 		verify(customerService).newCustomerAdded(argument.capture());
 		assertThat(argument.getValue().getCustomerId(), equalTo("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"));
 
-		verify(customerService).sendEmail(Matchers.any());
+		verify(customerService).sendEmail(ArgumentMatchers.any());
 	}
 
 }

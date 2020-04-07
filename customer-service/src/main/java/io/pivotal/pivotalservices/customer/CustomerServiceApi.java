@@ -25,10 +25,10 @@ public class CustomerServiceApi {
 
     @GetMapping("/{id}")
     public Customer getCustomerById(@PathVariable("id") String id) {
-        return repository.findOne(id);
+        return repository.findById(id).get();
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public String addCustomer(@RequestBody Customer customer) {
         repository.save(customer);
         publishNewCustomerAddedMessage(new NewCustomerAddedMessage(customer.getId()));

@@ -13,6 +13,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.mockito.Mockito.*;
@@ -48,7 +49,7 @@ public class ContractTestBase {
         customer2.setCreatedOn("2018-08-01T12:33:16+00:00");
 
         when(repository.findAll()).thenReturn(Arrays.asList(customer1, customer2));
-        when(repository.findOne(anyString())).thenReturn(customer1);
+        when(repository.findById(anyString())).thenReturn(Optional.of(customer1));
     }
 
     protected void newCustomerAddedTriggered() {

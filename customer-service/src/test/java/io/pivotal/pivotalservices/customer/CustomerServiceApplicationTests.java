@@ -30,12 +30,12 @@ public class CustomerServiceApplicationTests {
 
 	@Test
 	public void testAddCustomer_savesCustomerToRepository() throws Exception {
-		RequestBuilder request = MockMvcRequestBuilders.post("/customers").accept(MediaType.APPLICATION_JSON_UTF8)
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+		RequestBuilder request = MockMvcRequestBuilders.post("/customers").accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content("{ \"firstName\": \"Matt\", \"lastName\": \"Campbell\", \"email\": \"matt@example.com\" }");
 		mockMvc.perform(request)
 				.andExpect(status().isOk())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$.status", is("OK")));
 	}
 
