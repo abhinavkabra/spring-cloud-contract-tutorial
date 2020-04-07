@@ -1,8 +1,6 @@
 package io.pivotal.pivotalservices.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.http.MediaType;
 import org.springframework.messaging.support.MessageBuilder;

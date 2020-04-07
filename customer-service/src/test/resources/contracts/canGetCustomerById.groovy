@@ -11,10 +11,10 @@ org.springframework.cloud.contract.spec.Contract.make {
     response {
         status 200
         body([
-            "id": $(consumer('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb'), producer(regex(uuid()))),
-            "firstName": $(consumer("Shaun"), producer(regex('[a-zA-Z.-_]+'))),
-            "lastName": $(consumer("Anderson"), producer(regex('[a-zA-Z.-_]+'))),
-            "createdOn": $(consumer("2018-08-01T06:33:16+00:00"), producer(regex(iso8601WithOffset())))
+            "id": $(stub('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb'), test(regex(uuid()))),
+            "firstName": $(stub("Shaun"), test(regex('[a-zA-Z.-_]+'))),
+            "lastName": $(stub("Anderson"), test(regex('[a-zA-Z.-_]+'))),
+            "createdOn": $(stub("2018-08-01T06:33:16+00:00"), test(regex(iso8601WithOffset())))
         ])
         headers {
             contentType('application/json')

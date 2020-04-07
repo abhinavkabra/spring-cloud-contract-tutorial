@@ -8,7 +8,7 @@ org.springframework.cloud.contract.spec.Contract.make {
     outputMessage {
         sentTo('newCustomerAdded')
         body([
-                customerId: $(consumer('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb'), producer(regex(uuid())))
+                customerId: $(stub('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb'), test(regex(uuid())))
         ])
         headers {
             messagingContentType('application/json')
